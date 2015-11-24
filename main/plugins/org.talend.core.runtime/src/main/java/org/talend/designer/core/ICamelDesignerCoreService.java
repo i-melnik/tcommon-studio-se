@@ -18,13 +18,16 @@ import org.dom4j.Element;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IEditorPart;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.core.IService;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.IConnection;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.FileItem;
 import org.talend.core.model.properties.Item;
+import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryEditorInput;
 import org.talend.designer.codegen.ITalendSynchronizer;
 import org.talend.designer.core.model.utils.emf.talendfile.ProcessType;
 
@@ -40,9 +43,9 @@ public interface ICamelDesignerCoreService extends IService {
     public boolean isInstanceofCamelRoutes(Item item);
 
     public ERepositoryObjectType getRoutes();
-    
+
     public ERepositoryObjectType getRouteDocType();
-    
+
     public ERepositoryObjectType getRouteDocsType();
 
     public ProcessType getCamelProcessType(Item item);
@@ -57,23 +60,27 @@ public interface ICamelDesignerCoreService extends IService {
 
     public boolean isCamelMulitPageEditor(IEditorPart editor);
 
-	/**
-	 * Synchronized Route resource
-	 * 
-	 * @param item
-	 */
-	public List<IPath> synchronizeRouteResource(Item item);
-	
-	public String getDeleteFolderName(ERepositoryObjectType type);
-	
-	public boolean isRouteBuilderNode(INode node);
+    /**
+     * Synchronized Route resource
+     * 
+     * @param item
+     */
+    public List<IPath> synchronizeRouteResource(Item item);
 
-	public boolean canCreateNodeOnLink(IConnection connection, INode node);
-	
-	public EConnectionType getTargetConnectionType(INode node);
+    public String getDeleteFolderName(ERepositoryObjectType type);
 
-	public void appendRouteInfo2Doc(Item item, Element jobElement);
+    public boolean isRouteBuilderNode(INode node);
 
-	public FileItem newRouteDocumentationItem();
+    public boolean canCreateNodeOnLink(IConnection connection, INode node);
 
+    public EConnectionType getTargetConnectionType(INode node);
+
+    public void appendRouteInfo2Doc(Item item, Element jobElement);
+
+    public FileItem newRouteDocumentationItem();
+
+    public IRepositoryEditorInput getRouteEditorInput(ProcessItem processItem, boolean load, Boolean lastVersion)
+            throws PersistenceException;
+
+    public String getRouteEditorId(ProcessItem processItem);
 }
